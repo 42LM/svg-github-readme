@@ -1,4 +1,4 @@
-<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1280" height="55">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" version="1.1" width="1280" height="70">
  <path id="path" x="0" y="0">
 		<animate attributeName="d" from="m0,50 h0" to="m0,50 h1100" dur="6.8s" begin="0s" repeatCount="indefinite"/>
 	</path>
