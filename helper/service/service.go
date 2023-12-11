@@ -14,7 +14,6 @@ type Service interface {
 }
 
 type service struct {
-	logger         *slog.Logger
 	queryParams    map[string]string
 	responseWriter http.ResponseWriter
 	templates      *template.Template
