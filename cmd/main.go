@@ -1,4 +1,5 @@
 // Package main implements a simple HTTP server with
+// the single handler that is being used by vercel.
 //
 // The main package should only be used for local testing.
 package main

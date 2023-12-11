@@ -1,3 +1,4 @@
+// Package svgtemplate embeds the template files into the build go binary.
 package svgtemplate
 
 import (

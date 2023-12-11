@@ -1,40 +1,60 @@
 package handler_test
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 	"net/http/httptest"
-	"net/url"
 	"testing"
 
 	handler "svg-github-readme/api"
 )
 
 func Test_GenerateSVG(t *testing.T) {
-	text := "luke skywalker"
+	testCases := map[string]struct {
+		query string
 
-	query := fmt.Sprintf(
-		"/api?text=%s",
-		url.QueryEscape(text),
-	)
-
-	req := httptest.NewRequest(http.MethodGet, query, nil)
-	w := httptest.NewRecorder()
-
-	handler.GenerateSVG(w, req)
-
-	res := w.Result()
-	defer res.Body.Close()
-
-	data, err := io.ReadAll(res.Body)
-	if err != nil {
-		t.Error("unexpected error")
+		expSVG string
+		expErr error
+	}{
+		"animated_text": {
+			query:  "?type=animated_text&text=hello%20world&color=161A30&font_size=100&font_family=Arial",
+			expSVG: animated_text_svg,
+		},
+		"error": {
+			query:  "?text=hello%20world",
+			expSVG: error_svg,
+		},
+		"default": {
+			query:  "?type=animated_text&text=hello%20world",
+			expSVG: default_animated_text,
+		},
 	}
+	for tname, tc := range testCases {
+		t.Run(tname, func(t *testing.T) {
+			req := httptest.NewRequest(http.MethodGet, "/api"+tc.query, nil)
+			w := httptest.NewRecorder()
 
-	if string(data) != fixture {
-		t.Errorf("\n\nexpected: %v\nactual: %v\n", fixture, string(data))
+			handler.GenerateSVG(w, req)
+
+			res := w.Result()
+			defer res.Body.Close()
+
+			data, err := io.ReadAll(res.Body)
+			if err != nil {
+				t.Error("unexpected error")
+			}
+
+			if string(data) != tc.expSVG {
+				t.Errorf("\n\nexpected: %#v\nactual: %#v\n", tc.expSVG, string(data))
+			}
+		})
 	}
 }
 
-const fixture = "<svg width=\"100%\" height=\"100%\" viewBox=\"30 -50 600 500\" xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\">\n <path id=\"path\">\n\t\t<animate attributeName=\"d\" from=\"m0,110 h0\" to=\"m0,110 h1100\" dur=\"6.8s\" begin=\"0s\" repeatCount=\"indefinite\"/>\n\t</path>\n\t<text font-size=\"26\" font-family=\"Montserrat\" fill='#3081D0'>\n\t\t<textPath xlink:href=\"#path\">luke skywalker</textPath>\n\t</text>\n</svg>\n"
+// TODO: Better testing strategy
+// maybe also use the templates instead
+const (
+	default_animated_text = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" width=\"1280\" height=\"55\">\n <title>animated_text</title>\n <path id=\"path\" x=\"0\" y=\"0\">\n   <animate attributeName=\"d\" from=\"m0,25 h0\" to=\"m0,25 h1100\" dur=\"6.8s\" begin=\"0s\" repeatCount=\"indefinite\"/>\n </path>\n  <text x=\"0\" y=\"0\" font-size=\"25\" font-family=\"Open Sans\" fill=\"#000000\">\n    <textPath xlink:href=\"#path\">hello world</textPath>\n  </text>\n</svg>\n"
+	animated_text_svg     = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" width=\"1280\" height=\"130\">\n <title>animated_text</title>\n <path id=\"path\" x=\"0\" y=\"0\">\n   <animate attributeName=\"d\" from=\"m0,100 h0\" to=\"m0,100 h1100\" dur=\"6.8s\" begin=\"0s\" repeatCount=\"indefinite\"/>\n </path>\n  <text x=\"0\" y=\"0\" font-size=\"100\" font-family=\"Arial\" fill=\"#161A30\">\n    <textPath xlink:href=\"#path\">hello world</textPath>\n  </text>\n</svg>\n"
+	error_svg             = "<svg width=\"100\" height=\"100\" viewBox=\"0 0 1397 1296\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <title>error</title>\n  <g clip-path=\"url(#clip0_25_7)\">\n    <path d=\"M698.5 166L1207.29 1047.25H189.71L698.5 166Z\" fill=\"#F31559\"/>\n    <path d=\"M645 355V802H753V355H645Z\" fill=\"#D9D9D9\"/>\n    <path d=\"M645 882V990H753V882H645Z\" fill=\"#D9D9D9\"/>\n  </g>\n  <defs>\n    <clipPath id=\"clip0_25_7\">\n      <rect width=\"1397\" height=\"1296\" fill=\"white\"/>\n    </clipPath>\n  </defs>\n</svg>\n"
+)
