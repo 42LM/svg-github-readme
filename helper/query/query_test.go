@@ -5,7 +5,7 @@ import (
 	"strings"
 	"testing"
 
-	"svg-github-readme/internal/query"
+	"svg-github-readme/helper/query"
 )
 
 func Test_GetQueryParams(t *testing.T) {

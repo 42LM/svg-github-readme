@@ -8,9 +8,9 @@ import (
 	"net/http"
 	"os"
 
-	"svg-github-readme/internal/query"
-	"svg-github-readme/internal/service"
-	"svg-github-readme/internal/svgtemplate"
+	"svg-github-readme/helper/query"
+	"svg-github-readme/helper/service"
+	"svg-github-readme/helper/svgtemplate"
 )
 
 // GenerateSVG is the single handler being triggered by vercel.

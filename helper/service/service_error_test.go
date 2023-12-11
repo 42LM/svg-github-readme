@@ -7,11 +7,11 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"svg-github-readme/internal/service"
-	"svg-github-readme/internal/svgtemplate"
+	"svg-github-readme/helper/service"
+	"svg-github-readme/helper/svgtemplate"
 )
 
-func Test_Service_AnimatedText(t *testing.T) {
+func Test_Service_Error(t *testing.T) {
 	testCases := map[string]struct {
 		queryParams map[string]string
 
@@ -19,13 +19,7 @@ func Test_Service_AnimatedText(t *testing.T) {
 		expErr  error
 	}{
 		"all valid params": {
-			queryParams: map[string]string{
-				"color":       "EEEEEE",
-				"font_family": "Arial",
-				"font_size":   "20",
-				"text":        "hello world",
-			},
-			expBody: animated_text_svg,
+			expBody: error_svg,
 		},
 	}
 	for name, tc := range testCases {
@@ -37,12 +31,12 @@ func Test_Service_AnimatedText(t *testing.T) {
 			rec := httptest.NewRecorder()
 			s := service.New(&service.ServiceConfig{
 				Logger:         slog.Default(),
-				QueryParams:    tc.queryParams,
+				QueryParams:    nil,
 				ResponseWriter: rec,
 				Templates:      svgTemplates,
 			})
 
-			err := s.AnimatedText(context.Background())
+			err := s.Error(context.Background())
 
 			// Get the captured response from the ResponseRecorder
 			resp := rec.Result()
@@ -62,5 +56,5 @@ func Test_Service_AnimatedText(t *testing.T) {
 }
 
 const (
-	animated_text_svg = "<svg xmlns=\"http://www.w3.org/2000/svg\" xmlns:xlink=\"http://www.w3.org/1999/xlink\" version=\"1.1\" width=\"1280\" height=\"50\">\n <title>animated_text</title>\n <path id=\"path\" x=\"0\" y=\"0\">\n   <animate attributeName=\"d\" from=\"m0,20 h0\" to=\"m0,20 h1100\" dur=\"6.8s\" begin=\"0s\" repeatCount=\"indefinite\"/>\n </path>\n  <text x=\"0\" y=\"0\" font-size=\"20\" font-family=\"Arial\" fill=\"#EEEEEE\">\n    <textPath xlink:href=\"#path\">hello world</textPath>\n  </text>\n</svg>\n"
+	error_svg = "<svg width=\"100\" height=\"100\" viewBox=\"0 0 1397 1296\" fill=\"none\" xmlns=\"http://www.w3.org/2000/svg\">\n  <title>error</title>\n  <g clip-path=\"url(#clip0_25_7)\">\n    <path d=\"M698.5 166L1207.29 1047.25H189.71L698.5 166Z\" fill=\"#F31559\"/>\n    <path d=\"M645 355V802H753V355H645Z\" fill=\"#D9D9D9\"/>\n    <path d=\"M645 882V990H753V882H645Z\" fill=\"#D9D9D9\"/>\n  </g>\n  <defs>\n    <clipPath id=\"clip0_25_7\">\n      <rect width=\"1397\" height=\"1296\" fill=\"white\"/>\n    </clipPath>\n  </defs>\n</svg>\n"
 )
