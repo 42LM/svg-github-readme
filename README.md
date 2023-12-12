@@ -3,8 +3,9 @@
 svg-github-readme provides a simple solution of creating custom SVG's (e.g. headings, eye-catching content ...) in your github readme file.
 
 ## Animated Text
-![](https://svg-github-readme.vercel.app/api?type=animated_text&text=%23%23%20Animated%20Text&color=7ED7C1&font_size=25&font_family=Open%20Sans)
 ### Examples
+![](https://svg-github-readme.vercel.app/api?type=animated_text&text=%23%23%20Animated%20Text&color=7ED7C1&font_size=50&font_family=Open%20Sans)
+
 #### Full example query
 ```markdown
 ![](https://svg-github-readme.vercel.app/api?type=animated_text&text=helloworld&color=161A30&font_size=100&font_family=Arial)
