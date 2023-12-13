@@ -11,6 +11,7 @@ import (
 type Service interface {
 	AnimatedText(ctx context.Context) error
 	Error(ctx context.Context) error
+	StaticText(ctx context.Context) error
 }
 
 type service struct {

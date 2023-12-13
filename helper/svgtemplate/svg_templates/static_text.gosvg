@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" version="1.1" viewbox="0 0 100 100" width="1280" height="{{.Height}}">
+  <title>static_text</title>
+  <text fill="#{{.Color}}">
+    <tspan font-size="{{.FontSize}}" x="0" y="50%" font-family="{{.FontFamily}}" dominant-baseline="middle">{{.Text}}</tspan>
+  </text>
+</svg>

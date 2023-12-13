@@ -3,7 +3,6 @@
 package handler
 
 import (
-	"context"
 	"log/slog"
 	"net/http"
 	"os"
@@ -31,12 +30,15 @@ func GenerateSVG(w http.ResponseWriter, r *http.Request) {
 		Templates:      svgTemplates,
 	})
 
+	ctx := r.Context()
 	// type switch for svg type
 	// no type given leads to creation of a default error svg.
 	switch qp["type"] {
 	case "animated_text":
-		svc.AnimatedText(context.Background())
+		svc.AnimatedText(ctx)
+	case "static_text":
+		svc.StaticText(ctx)
 	default:
-		svc.Error(context.Background())
+		svc.Error(ctx)
 	}
 }
