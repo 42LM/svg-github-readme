@@ -9,9 +9,8 @@ Table of Contents:
  * [Static Text](#static-text)
 
 ## Animated Text
-![](https://svg-github-readme.vercel.app/api?type=animated_text&text=Animated%20Text&color=FF90BC&font_size=25&font_family=Open%20Sans)
 ### Examples
-![](https://svg-github-readme.vercel.app/api?type=animated_text&text=%23%23%20Animated%20Text&color=7ED7C1&font_size=50&font_family=Open%20Sans)
+![](https://svg-github-readme.vercel.app/api?type=animated_text&text=Animated%20Text&color=E26EE5&font_size=50&font_family=Open%20Sans)
 
 #### Full example query
 ```markdown
@@ -37,7 +36,7 @@ Table of Contents:
 | text                 | hello%20world | false     |
 
 ## Static Text
-![](https://svg-github-readme.vercel.app/api?type=static_text&text=Static%20Text&color=FFA732&font_size=25&font_family=Open%20Sans)
+![](https://svg-github-readme.vercel.app/api?type=static_text&text=Static%20Text&color=FFA732&font_size=50&font_family=Open%20Sans)
 ### Examples
 #### Full example query
 ```markdown
